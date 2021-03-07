@@ -3,16 +3,20 @@ import useInterval from "../utils/useInterval";
 import Settings from "./Settings";
 import StartStop from "./StartStop";
 import Progress from "./Progress";
+import SoundEffects from "./SoundEffects";
 
 function Pomodoro() {
   const startState = {
     workSetTime: 1500,
     workTimeRemaining: 1500,
     breakSetTime: 300,
-    breakTimeRemaining: 300
+    breakTimeRemaining: 300,
+    breakAlarmPlayed: false
   }
   const [isTimerRunning, setIsTimerRunning] = useState(false);
   const [stats, setStats] = useState(startState);
+  const foghorn = document.getElementById("foghorn");
+  const bwah = document.getElementById("bwah");
 
   useInterval(
     () => {
@@ -23,13 +27,16 @@ function Pomodoro() {
           workTimeRemaining: (stats.workTimeRemaining - 1)
         }})
       // Now in the break phase
-      } else if (stats.breakTimeRemaining > 1) {
+      } else if (stats.breakTimeRemaining > 0) {
+        if (!stats.breakAlarmPlayed) foghorn.play();
         setStats(() => { return {
           ...stats, 
-          breakTimeRemaining: (stats.breakTimeRemaining - 1)
+          breakTimeRemaining: (stats.breakTimeRemaining - 1),
+          breakAlarmPlayed: true
         }})
       // Finished round. Reset timer.
       } else {
+        bwah.play()
         reset();
       }
     },
@@ -96,6 +103,7 @@ function Pomodoro() {
       <Settings shouldBeDisabled={isTimerRunning} stats={stats} stateChangers={{plusWorkTime, minusWorkTime, plusBreakTime, minusBreakTime}}/>
       <StartStop isTimerRunning={isTimerRunning} playPause={playPause} reset={reset} />
       <Progress stats={stats} isTimerRunning={isTimerRunning}/>
+      <SoundEffects />
     </div>
   );
 }
