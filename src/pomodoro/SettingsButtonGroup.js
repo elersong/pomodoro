@@ -11,7 +11,7 @@ function SettingsButtonGroup({
   return (
     <div className="input-group input-group-lg mb-2">
       <span className="input-group-text" data-testid={`duration-${testId}`}>
-        `${settingName}: ${durationAmount}`
+        {`${settingName}: ${durationAmount}`}
       </span>
       <div className="input-group-append">
         <Button
