@@ -1,12 +1,16 @@
 import React from "react";
 
-function ProgressBar({stats, phase}) {
+function ProgressBar({ stats, phase }) {
+  const percentageWorkComplete =
+    ((stats.workSetTime - stats.workTimeRemaining) * 100) / stats.workSetTime;
     
-    const percentageWorkComplete = (stats.workSetTime - stats.workTimeRemaining)*100/stats.workSetTime;
-    const percentageBreakComplete = (stats.breakSetTime - stats.breakTimeRemaining)*100/stats.breakSetTime;
+  const percentageBreakComplete =
+    ((stats.breakSetTime - stats.breakTimeRemaining) * 100) /
+    stats.breakSetTime;
 
-    const percentageComplete = (phase === "Focusing") ? percentageWorkComplete : percentageBreakComplete;
-  
+  const percentageComplete =
+    phase === "Focusing" ? percentageWorkComplete : percentageBreakComplete;
+
   return (
     <div className="row mb-2">
       <div className="col">

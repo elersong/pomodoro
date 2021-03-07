@@ -25,16 +25,16 @@ function StartStop({ reset, isTimerRunning, playPause }) {
               })}
             />
           </button>
-          {/* TODO: Implement stopping the current focus or break session and disable when there is no active session */}
+
           <button
             type="button"
-            onClick={() => reset(true)}
             className={classNames({
               btn: true,
               "btn-secondary": true,
               disabled: !isTimerRunning,
             })}
             title="Stop the session"
+            onClick={() => reset(true)}
           >
             <span className="oi oi-media-stop" />
           </button>
