@@ -16,16 +16,19 @@ function Pomodoro() {
 
   useInterval(
     () => {
+      // Still in the focus phase
       if (stats.workTimeRemaining > 0) {
         setStats(() => { return {
           ...stats, 
           workTimeRemaining: (stats.workTimeRemaining - 1)
         }})
+      // Now in the break phase
       } else if (stats.breakTimeRemaining > 1) {
         setStats(() => { return {
           ...stats, 
           breakTimeRemaining: (stats.breakTimeRemaining - 1)
         }})
+      // Finished round. Reset timer.
       } else {
         reset();
       }
