@@ -5,7 +5,6 @@ import StartStop from "./StartStop";
 import Progress from "./Progress";
 
 function Pomodoro() {
-  // Timer starts out paused
   const startState = {
     workSetTime: 1500,
     workTimeRemaining: 1500,
@@ -17,7 +16,6 @@ function Pomodoro() {
 
   useInterval(
     () => {
-      // ToDo: Implement what should happen when the timer is running
       if (stats.workTimeRemaining > 0) {
         setStats(() => { return {
           ...stats, 
@@ -35,8 +33,8 @@ function Pomodoro() {
     isTimerRunning ? 1000 : null
   );
 
-  const reset = () => {
-    playPause();
+  const reset = (stop = false) => {
+    if (stop) playPause();
     setStats(() => { return {
       ...stats, 
       breakTimeRemaining: stats.breakSetTime,
@@ -90,13 +88,11 @@ function Pomodoro() {
     setIsTimerRunning((prevState) => !prevState);
   }
 
-  const phaseTitle = (stats.workTimeRemaining > 1) ? "Focusing" : "On Break";
-
   return (
     <div className="pomodoro">
       <Settings shouldBeDisabled={isTimerRunning} stats={stats} stateChangers={{plusWorkTime, minusWorkTime, plusBreakTime, minusBreakTime}}/>
       <StartStop isTimerRunning={isTimerRunning} playPause={playPause} reset={reset} />
-      <Progress phase={phaseTitle} stats={stats} isTimerRunning={isTimerRunning}/>
+      <Progress stats={stats} isTimerRunning={isTimerRunning}/>
     </div>
   );
 }

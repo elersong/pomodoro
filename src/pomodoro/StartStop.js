@@ -28,7 +28,7 @@ function StartStop({ reset, isTimerRunning, playPause }) {
           {/* TODO: Implement stopping the current focus or break session and disable when there is no active session */}
           <button
             type="button"
-            onClick={reset}
+            onClick={() => reset(true)}
             className={classNames({
               btn: true,
               "btn-secondary": true,
